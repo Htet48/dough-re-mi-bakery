@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dough-Re-Mi Bakery — Sales Management App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --forest:  #1C3829;
+      --forest2: #152A1E;
+      --honey:   #E4B950;
+      --sage:    #4A8C6B;
+      --cream:   #FAFAF7;
+      --red:     #B83232;
+      --amber:   #A67C3A;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--forest); overflow-x: hidden; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--forest2) 0%, var(--forest) 60%, #254D35 100%);
+      padding: 72px 24px 80px; text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(228,185,80,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(74,140,107,0.12) 0%, transparent 40%);
+    }
+    .hero-inner { position: relative; max-width: 700px; margin: 0 auto; }
+
+    .logo-wrap {
+      display: inline-flex; align-items: center; gap: 14px;
+      background: rgba(228,185,80,0.1); border: 1px solid rgba(228,185,80,0.3);
+      border-radius: 16px; padding: 12px 22px; margin-bottom: 36px;
+    }
+    .logo-icon {
+      width: 46px; height: 46px; background: rgba(228,185,80,0.15);
+      border: 1px solid rgba(228,185,80,0.35); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-name { font-family: 'Lora', serif; color: var(--honey); font-size: 19px; font-weight: 700; line-height: 1; }
+    .logo-sub  { color: rgba(255,255,255,0.3); font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; margin-top: 4px; }
+
+    .hero h1 {
+      font-family: 'Lora', serif; font-size: clamp(30px, 6vw, 50px);
+      font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--honey); }
+    .hero-sub {
+      font-size: clamp(14px, 2.5vw, 17px); color: rgba(255,255,255,0.58);
+      line-height: 1.75; margin-bottom: 40px; font-weight: 300;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--honey); color: var(--forest);
+      font-size: 15px; font-weight: 700; padding: 15px 36px;
+      border-radius: 50px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(228,185,80,0.35);
+    }
+    .hero-badges {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 30px;
+    }
+    .badge {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 50px; padding: 6px 16px;
+      font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 500;
+    }
+
+
+    /* ── SECTION WRAPPER ── */
+    .section { padding: 68px 24px; max-width: 1080px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block; background: rgba(74,140,107,0.1); color: var(--sage);
+      border: 1px solid rgba(74,140,107,0.25); border-radius: 50px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 4px 14px; margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Lora', serif; font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700; color: var(--forest); margin-bottom: 10px; line-height: 1.25;
+    }
+    .section-sub { font-size: 15px; color: #6B8C7A; line-height: 1.75; max-width: 560px; }
+
+    /* ── FEATURE GRID ── */
+    .feat-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 18px; margin-top: 44px;
+    }
+    .feat-card {
+      background: #fff; border: 1px solid #DDE8E2; border-radius: 16px;
+      padding: 28px; border-top: 3px solid transparent;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feat-card:hover { transform: translateY(-3px); box-shadow: 0 14px 44px rgba(28,56,41,0.09); }
+    .feat-card.c1 { border-top-color: var(--sage);   }
+    .feat-card.c2 { border-top-color: var(--honey);  }
+    .feat-card.c3 { border-top-color: var(--forest); }
+    .feat-card.c4 { border-top-color: var(--red);    }
+    .feat-card.c5 { border-top-color: var(--amber);  }
+
+    .feat-emoji { font-size: 32px; margin-bottom: 14px; display: block; }
+    .feat-title { font-family: 'Lora', serif; font-size: 17px; font-weight: 600; color: var(--forest); margin-bottom: 9px; }
+    .feat-desc  { font-size: 13.5px; color: #5A7A68; line-height: 1.7; }
+    .feat-list  { list-style: none; margin-top: 12px; display: flex; flex-direction: column; gap: 7px; }
+    .feat-list li {
+      font-size: 13px; color: #4A6A58; display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;
+    }
+    .feat-list li::before { content: '✓'; color: var(--sage); font-weight: 700; flex-shrink: 0; }
+
+    /* ── ROLES ── */
+    .roles { background: var(--forest); padding: 68px 24px; }
+    .roles-inner { max-width: 1080px; margin: 0 auto; }
+    .roles-title { font-family: 'Lora', serif; font-size: clamp(24px,4vw,34px); font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .roles-sub   { color: rgba(255,255,255,0.4); font-size: 15px; margin-bottom: 44px; }
+    .roles-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    @media (max-width: 620px) { .roles-grid { grid-template-columns: 1fr; } }
+
+    .role-card { border-radius: 16px; padding: 30px; border: 1px solid rgba(228,185,80,0.15); }
+    .role-card.admin { background: rgba(228,185,80,0.06); }
+    .role-card.sales { background: rgba(74,140,107,0.08); }
+
+    .role-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .role-label.gold { color: var(--honey); }
+    .role-label.sage { color: var(--sage);  }
+    .role-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .role-dot.gold { background: var(--honey); }
+    .role-dot.sage { background: var(--sage);  }
+
+    .role-card h3 { font-family: 'Lora', serif; font-size: 21px; font-weight: 700; color: #fff; margin-bottom: 20px; }
+    .role-item { display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; }
+    .role-item-icon { font-size: 20px; flex-shrink: 0; }
+    .role-item-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 3px; }
+    .role-item-text  { font-size: 12.5px; color: rgba(255,255,255,0.5); line-height: 1.55; }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: #fff; padding: 68px 24px; }
+    .how-inner { max-width: 860px; margin: 0 auto; text-align: center; }
+    .steps { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; margin-top: 48px; }
+    .step { flex: 1; min-width: 130px; max-width: 180px; text-align: center; padding: 0 10px; position: relative; }
+    .step:not(:last-child)::after {
+      content: '→'; position: absolute; right: -12px; top: 18px;
+      color: var(--honey); font-size: 20px; font-weight: 700;
+    }
+    @media (max-width: 580px) { .step:not(:last-child)::after { display: none; } }
+    .step-num {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--forest); color: var(--honey);
+      font-family: 'Lora', serif; font-size: 19px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;
+    }
+    .step-title { font-size: 13px; font-weight: 700; color: var(--forest); margin-bottom: 6px; }
+    .step-desc  { font-size: 11.5px; color: #7A8C84; line-height: 1.55; }
+
+    /* ── BENEFIT STRIP ── */
+    .benefit-strip {
+      background: var(--cream); border-top: 1px solid #DDE8E2; border-bottom: 1px solid #DDE8E2;
+      padding: 28px 24px; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px;
+    }
+    .benefit-pill {
+      background: #fff; border: 1px solid #DDE8E2; border-radius: 50px;
+      padding: 8px 20px; font-size: 13px; font-weight: 600; color: var(--forest);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--forest) 0%, #254D35 100%);
+      padding: 68px 24px; text-align: center;
+    }
+    .cta-inner { max-width: 640px; margin: 0 auto; }
+    .cta-banner h2 { font-family: 'Lora', serif; font-size: clamp(24px,4vw,36px); font-weight: 700; color: #fff; margin-bottom: 14px; }
+    .cta-banner p  { color: rgba(255,255,255,0.45); font-size: 15px; margin-bottom: 32px; line-height: 1.75; }
+    .cta-url {
+      display: inline-block; background: rgba(228,185,80,0.1);
+      border: 1.5px solid rgba(228,185,80,0.4); color: var(--honey);
+      border-radius: 12px; padding: 14px 32px; font-size: 16px; font-weight: 700;
+      text-decoration: none; letter-spacing: 0.5px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--forest2); padding: 28px 24px; text-align: center;
+      color: rgba(255,255,255,0.22); font-size: 12px;
+    }
+    footer span { color: var(--honey); }
+
+    @media (max-width: 640px) {
+      .stat-item { padding: 10px 18px; }
+      .feat-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <div class="logo-wrap">
+      <div class="logo-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path d="M9 18V5l12-2v13" stroke="#E4B950" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="6" cy="18" r="3" stroke="#E4B950" stroke-width="1.8"/>
+          <circle cx="18" cy="16" r="3" stroke="#E4B950" stroke-width="1.8"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-name">Dough-Re-Mi</div>
+        <div class="logo-sub">Bakery</div>
+      </div>
+    </div>
+
+    <h1>Run Your Bakery Sales<br/>with <span>Full Confidence</span></h1>
+    <p class="hero-sub">
+      A simple, smart sales management app designed for bakery teams —
+      assign products each morning, track every sale on the road,
+      print receipts instantly, and review everything from one screen.
+    </p>
+
+    <a href="https://dough-re-mi-bakery.web.app" class="hero-cta" target="_blank">
+      🌐 Try the Live App
+    </a>
+
+    <div class="hero-badges">
+      <span class="badge">📱 Works on Any Phone</span>
+      <span class="badge">🖨 Thermal Receipt Printing</span>
+      <span class="badge">📷 Barcode Scanner</span>
+      <span class="badge">📊 Live Admin Dashboard</span>
+      <span class="badge">🔐 Secure Login</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ FEATURES ══════════════════ -->
+<section class="section">
+  <div class="section-tag">What It Does</div>
+  <h2 class="section-title">Everything your team needs,<br/>nothing they don't</h2>
+  <p class="section-sub">From morning stock assignment to end-of-day reporting — every part of your delivery sales process, covered.</p>
+
+  <div class="feat-grid">
+
+    <div class="feat-card c1">
+      <span class="feat-emoji">📊</span>
+      <div class="feat-title">Live Admin Dashboard</div>
+      <div class="feat-desc">See your entire business at a glance — updated automatically every minute, no manual refresh needed.</div>
+      <ul class="feat-list">
+        <li>Today's total revenue and shops visited</li>
+        <li>Performance summary per delivery car</li>
+        <li>Best-selling products of the day</li>
+        <li>Returns and discounts tracked separately</li>
+      </ul>
+    </div>
+
+    <div class="feat-card c2">
+      <span class="feat-emoji">📋</span>
+      <div class="feat-title">Morning Stock Assignment</div>
+      <div class="feat-desc">Admin allocates the right products to each car route every morning — quickly and accurately.</div>
+      <ul class="feat-list">
+        <li>Assign by scanning product barcodes</li>
+        <li>Or type quantities manually</li>
+        <li>Sold-out products hide automatically</li>
+        <li>Over-selling is blocked at the source</li>
+      </ul>
+    </div>
+
+    <div class="feat-card c3">
+      <span class="feat-emoji">🛒</span>
+      <div class="feat-title">Sales Recording on the Road</div>
+      <div class="feat-desc">Salesperson records each shop's sale on their phone in seconds — simple, fast, and mistake-proof.</div>
+      <ul class="feat-list">
+        <li>Each shop's discount applied automatically</li>
+        <li>Can't sell more than what's assigned</li>
+        <li>Tracks how much was sold at other stops</li>
+        <li>Search and filter products instantly</li>
+      </ul>
+    </div>
+
+    <div class="feat-card c1">
+      <span class="feat-emoji">🧾</span>
+      <div class="feat-title">Instant Receipt Printing</div>
+      <div class="feat-desc">Print a professional receipt for every customer right after the sale — no delays, no handwriting.</div>
+      <ul class="feat-list">
+        <li>Works with standard 80mm thermal printers</li>
+        <li>Unique invoice number per transaction</li>
+        <li>Shows all items, returns, discount and total</li>
+        <li>Tracks how many times each receipt was printed</li>
+      </ul>
+    </div>
+
+    <div class="feat-card c2">
+      <span class="feat-emoji">📷</span>
+      <div class="feat-title">Barcode Scanning</div>
+      <div class="feat-desc">Speed up data entry with barcode scanning — no typing needed for product lookup.</div>
+      <ul class="feat-list">
+        <li>Plug-and-play USB or wireless scanners</li>
+        <li>Camera scan directly on any mobile phone</li>
+        <li>Automatically opens return screen for sold-out items</li>
+        <li>Prevents scanning over-allocated products</li>
+      </ul>
+    </div>
+
+    <div class="feat-card c4">
+      <span class="feat-emoji">🔄</span>
+      <div class="feat-title">Returns Management</div>
+      <div class="feat-desc">Handle product returns cleanly — separate from sales, with its own tracking and reporting.</div>
+      <ul class="feat-list">
+        <li>Enter returns per product per shop</li>
+        <li>Return-only screen for fully sold items</li>
+        <li>Both admin and salesperson can process returns</li>
+        <li>Return totals shown in all reports</li>
+      </ul>
+    </div>
+
+    <div class="feat-card c3">
+      <span class="feat-emoji">📈</span>
+      <div class="feat-title">Sales Reports & Export</div>
+      <div class="feat-desc">Admin reviews every transaction for any date — with export options for records and accounting.</div>
+      <ul class="feat-list">
+        <li>Filter by date range or delivery car</li>
+        <li>See when each sale was saved and printed</li>
+        <li>Highlights over-allocation warnings</li>
+        <li>Export to Excel or save to Google Drive</li>
+      </ul>
+    </div>
+
+    <div class="feat-card c5">
+      <span class="feat-emoji">🔐</span>
+      <div class="feat-title">Secure Role-Based Access</div>
+      <div class="feat-desc">Admin and salesperson each see only what they need — nothing more, nothing less.</div>
+      <ul class="feat-list">
+        <li>Separate login for admin and salesperson</li>
+        <li>Auto session timeout when left idle</li>
+        <li>Each salesperson linked to their own route</li>
+        <li>Data protected at every level</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ ROLES ══════════════════ -->
+<div class="roles">
+  <div class="roles-inner">
+    <div class="section-tag" style="background:rgba(228,185,80,0.1);color:var(--honey);border-color:rgba(228,185,80,0.2)">Who Uses It</div>
+    <h2 class="roles-title">Two roles. One system.</h2>
+    <p class="roles-sub">Built for how bakery teams actually work — manager in the office, salesperson on the road.</p>
+
+    <div class="roles-grid">
+      <div class="role-card admin">
+        <div class="role-label gold"><div class="role-dot gold"></div>Admin / Manager</div>
+        <h3>Full Control from the Office</h3>
+        <div class="role-item">
+          <div class="role-item-icon">📊</div>
+          <div><div class="role-item-title">Live Dashboard</div><div class="role-item-text">Monitor all cars, revenue, shops visited and returns in real time</div></div>
+        </div>
+        <div class="role-item">
+          <div class="role-item-icon">📦</div>
+          <div><div class="role-item-title">Daily Stock Assignment</div><div class="role-item-text">Decide what goes in each car every morning with a few taps</div></div>
+        </div>
+        <div class="role-item">
+          <div class="role-item-icon">⚙️</div>
+          <div><div class="role-item-title">Manage Everything</div><div class="role-item-text">Add or update products, shops, routes and staff from one place</div></div>
+        </div>
+        <div class="role-item">
+          <div class="role-item-icon">📑</div>
+          <div><div class="role-item-title">Reports & Export</div><div class="role-item-text">Pull sales reports for any date and export for accounting</div></div>
+        </div>
+      </div>
+
+      <div class="role-card sales">
+        <div class="role-label sage"><div class="role-dot sage"></div>Salesperson / Driver</div>
+        <h3>Fast & Simple on the Road</h3>
+        <div class="role-item">
+          <div class="role-item-icon">🚗</div>
+          <div><div class="role-item-title">View Today's Assignment</div><div class="role-item-text">See exactly which products and quantities are loaded for the day</div></div>
+        </div>
+        <div class="role-item">
+          <div class="role-item-icon">🛒</div>
+          <div><div class="role-item-title">Record Sales Quickly</div><div class="role-item-text">Tap a shop, enter quantities, save — done in seconds at every stop</div></div>
+        </div>
+        <div class="role-item">
+          <div class="role-item-icon">🧾</div>
+          <div><div class="role-item-title">Print Customer Receipt</div><div class="role-item-text">Thermal receipt printed on the spot for every customer</div></div>
+        </div>
+        <div class="role-item">
+          <div class="role-item-icon">📷</div>
+          <div><div class="role-item-title">Scan Instead of Typing</div><div class="role-item-text">Use a barcode scanner or phone camera to add products faster</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ HOW IT WORKS ══════════════════ -->
+<div class="how">
+  <div class="how-inner">
+    <div class="section-tag">Daily Workflow</div>
+    <h2 class="section-title" style="text-align:center">How a typical day works</h2>
+    <p class="section-sub" style="margin:0 auto;text-align:center">A simple routine that keeps your whole team in sync — morning to end of day.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Admin Assigns</div>
+        <div class="step-desc">Products loaded into each delivery car route every morning</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Team Delivers</div>
+        <div class="step-desc">Salesperson records each shop's sale directly on their phone</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Receipt Printed</div>
+        <div class="step-desc">Customer gets a professional receipt on the spot</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Admin Reviews</div>
+        <div class="step-desc">Live dashboard and reports updated automatically all day</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ BENEFIT PILLS ══════════════════ -->
+<div class="benefit-strip">
+  <div class="benefit-pill">✅ No over-selling</div>
+  <div class="benefit-pill">📱 Works on any phone</div>
+  <div class="benefit-pill">🖨 Thermal receipt printing</div>
+  <div class="benefit-pill">☁️ Always up to date</div>
+  <div class="benefit-pill">📷 Barcode scanning</div>
+  <div class="benefit-pill">📊 Live reporting</div>
+  <div class="benefit-pill">🔄 Returns tracked</div>
+  <div class="benefit-pill">📁 Export to Excel</div>
+</div>
+
+<!-- ══════════════════ CTA ══════════════════ -->
+<div class="cta-banner">
+  <div class="cta-inner">
+    <h2>Ready to take control of<br/>your bakery sales?</h2>
+    <p>
+      No complicated setup. No extra hardware.<br/>
+      Works on any phone or computer — your team can start today.
+    </p>
+    <a href="https://dough-re-mi-bakery.web.app" class="cta-url" target="_blank">
+      🌐 dough-re-mi-bakery.web.app
+    </a>
+  </div>
+</div>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <p>© 2026 <span>Dough-Re-Mi Bakery</span> · Sales Management System · Myanmar</p>
+</footer>
+
+</body>
+</html>
