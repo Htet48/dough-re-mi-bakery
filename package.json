@@ -1,0 +1,34 @@
+{
+  "name": "dough-re-mi-bakery",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@zxing/browser": "^0.2.0",
+    "date-fns": "^3.3.1",
+    "firebase": "^10.14.1",
+    "firebase-admin": "^13.8.0",
+    "lucide-react": "^0.344.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "react-router-dom": "^6.22.0",
+    "react-to-print": "^2.15.1",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "react-scripts": "5.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead"
+    ],
+    "development": [
+      "last 1 chrome version"
+    ]
+  }
+}

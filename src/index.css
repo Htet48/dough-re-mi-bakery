@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Dough-Re-Mi — Forest & Honey */
+  --forest:   #1C3829;   /* deep forest green — sidebar */
+  --forest2:  #152A1E;   /* darker forest */
+  --honey:    #E4B950;   /* warm honey — accent */
+  --honey2:   #F0CC70;   /* lighter honey */
+  --sage:     #4A8C6B;   /* medium sage green */
+  --cream:    #FAFAF7;   /* near-white ivory */
+  --cream2:   #F2F0EA;
+  --border:   #E4DDD2;
+  --white:    #FFFFFF;
+  --charcoal: #1A1A1A;
+  --muted:    #6B6B6B;
+  --success:  #3A7A4F;
+  --danger:   #A33A2D;
+  --font-serif: 'Lora', Georgia, serif;
+  --font-sans:  'DM Sans', -apple-system, system-ui, sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+}
+
+/* All h1, h2, h3 get serif */
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  color: var(--slate);
+}
+
+/* Scrollbar - minimal */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #E5DDD0; border-radius: 10px; }
+
+/* Input base */
+input, select, textarea, button {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--charcoal);
+  outline: none;
+}
+
+/* Remove number input arrows */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+/* Focus ring for inputs */
+input:focus, select:focus, textarea:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 2px rgba(201,168,76,0.12);
+}
+
+/* Table base */
+table { border-collapse: collapse; }
+
+/* Smooth transitions */
+a, button { transition: opacity 0.15s, background 0.15s; }
+button:hover { opacity: 0.88; }
+button:active { opacity: 0.75; }
